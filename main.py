@@ -11,6 +11,7 @@ def main():
     data_dir = 'data/main'
     best_model_path = 'saved_models/best_model.pth'
     saved_models_dir = 'saved_models'
+    predicted_dir = 'prediction'
 
     # Define model hyperparameters
     sequence_length = 24 * 30  # 30 days of hourly data
@@ -20,7 +21,7 @@ def main():
     output_size = 1
     batch_size = 1000
     learning_rate = 1e-3
-    num_epochs = 200
+    num_epochs = 300
 
     # Create the saved_models directory if it doesn't exist
     os.makedirs(saved_models_dir, exist_ok=True)
@@ -34,7 +35,7 @@ def main():
     criterion = nn.MSELoss()
 
     # Train the model
-    train_model(model, criterion, train_loader, validation_loader, start_epoch, num_epochs, best_loss, best_model_path, learning_rate, saved_models_dir)
+    train_model(model, criterion, train_loader, validation_loader, start_epoch, num_epochs, best_loss, best_model_path, learning_rate, saved_models_dir, predicted_dir)
 
     # Evaluate the model on the test data
     evaluate_model(model, test_loader, criterion, best_model_path, num_batches_to_plot=2)
