@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 
 class HybridRNN(nn.Module):
@@ -25,11 +26,20 @@ class HybridRNN(nn.Module):
             self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, dropout=0.5)
         if self.use_gru:
             self.gru = nn.GRU(input_size, hidden_size, num_layers, batch_first=True, dropout=0.5)
+        
+        if self.use_lstm and self.use_gru:
+            self.fc = nn.Sequential(
+                nn.Linear(hidden_size * 2, 10),
+                nn.Dropout(0.2),
+                nn.Linear(10, output_size)
+            )
+        else:
+            self.fc = nn.Sequential(
+                nn.Linear(hidden_size, 10),
+                nn.Dropout(0.2),
+                nn.Linear(10, output_size)
+            )
 
-        self.fc = nn.Sequential(
-            nn.Linear(hidden_size, output_size),
-            nn.Dropout(0.5)
-        )
 
     def forward(self, x):
         """
@@ -44,7 +54,7 @@ class HybridRNN(nn.Module):
         if self.use_lstm and self.use_gru:
             lstm_out, _ = self.lstm(x)
             gru_out, _ = self.gru(x)
-            out = lstm_out + gru_out
+            out = torch.cat((lstm_out, gru_out), dim=1)
         elif self.use_lstm:
             lstm_out, _ = self.lstm(x)
             out = lstm_out

@@ -46,8 +46,8 @@ class MyDataLoader(DataLoader):
         self.train_loader, self.validation_loader, self.test_loader = self._load_data()
 
     def _load_data(self):
-        train_size = int(0.7 * len(self.dataset))
-        validation_size = int(0.15 * len(self.dataset))
+        train_size = int(0.6 * len(self.dataset))
+        validation_size = int(0.2 * len(self.dataset))
         # Split the dataset into training, validation, and test sets
         train_dataset = torch.utils.data.Subset(self.dataset, range(train_size))
         validation_dataset = torch.utils.data.Subset(self.dataset, range(train_size, train_size + validation_size))

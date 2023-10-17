@@ -14,12 +14,12 @@ def main():
     predicted_dir = 'prediction'
 
     # Define model hyperparameters
-    sequence_length = 24 * 30  # 30 days of hourly data
+    sequence_length = 24 * 7  #  One week of hourly data
     input_size = 6
-    hidden_size = 256
+    hidden_size = 64
     num_layers = 2
     output_size = 1
-    batch_size = 1000
+    batch_size = 256
     learning_rate = 1e-3
     num_epochs = 300
 
