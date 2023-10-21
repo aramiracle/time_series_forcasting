@@ -46,13 +46,40 @@ The `model.py` file defines the architecture of the HybridRNN model. This model 
 
 ### `trainer.py`
 
-The `trainer.py` file contains the training loop and functions for training the model. It also handles the checkpointing of the best models based on validation loss. Here's a summary of its functionality:
+The `trainer.py` file is responsible for training the time series forecasting model. It includes the following functions and features:
 
-- The `train_model` function is responsible for training the model with specified hyperparameters and data.
-- It uses the Adam optimizer with a custom learning rate to update the model's weights.
-- Training loss and validation loss are tracked for each epoch.
-- The best model based on validation loss is saved to a checkpoint file for later use.
-- The code also generates a training and validation loss plot for visualization.
+- **`visualize_time_series_predictions_and_save` Function:**
+    - This function visualizes and saves time series predictions during training. It creates line plots for the target and predicted data, saving them as image files.
+    - Inputs:
+      - `target_series`: Actual time series data.
+      - `predicted_series`: Model's predicted time series data.
+      - `predictions_dir`: Directory to save the prediction images.
+      - `epoch`: Current epoch number.
+      - `phase`: Training or validation phase.
+
+- **`train_model` Function:**
+    - The core of the training process, this function trains the model with specified hyperparameters and data.
+    - Inputs:
+      - `model`: The time series forecasting model.
+      - `criterion`: Loss criterion (e.g., mean squared error).
+      - `train_loader`: Data loader for training data.
+      - `validation_loader`: Data loader for validation data.
+      - `start_epoch`: The initial training epoch.
+      - `num_epochs`: The total number of training epochs.
+      - `best_loss`: The best validation loss.
+      - `best_model_path`: Path to save the best model checkpoint.
+      - `learning_rate`: The learning rate for the optimizer.
+      - `saved_models_dir`: Directory for saving model checkpoints.
+      - `predictions_dir`: Directory for saving prediction images.
+    - The function:
+        - Initializes an Adam optimizer with the specified learning rate to update model weights.
+        - Tracks training and validation losses over epochs.
+        - Saves the model with the best validation loss as a checkpoint.
+        - Generates a training and validation loss plot for visualization.
+        
+- **Training Loop:**
+    - Within the training loop, the `train_model` function iterates through each batch in the training data, computes the loss, backpropagates gradients, and updates model parameters.
+    - It also tracks target and predicted time series data for visualization.
 
 ### `evaluator.py`
 
