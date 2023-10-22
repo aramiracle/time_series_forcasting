@@ -40,4 +40,4 @@ def evaluate_model(model, test_loader, criterion, best_model_path, num_batches_t
     plt.plot(test_targets, color='b', label="Actual")
     plt.legend()
     plt.savefig('results.png')
-    plt.show()
+    plt.close()

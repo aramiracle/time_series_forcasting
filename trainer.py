@@ -40,12 +40,12 @@ def train_model(model, criterion, train_loader, validation_loader, start_epoch, 
 
     # Training loop
     best_epoch = -1
+    validation_freq = 10
 
     # Visualize train targets with model predictions and save
-    train_target_series = []
-    train_predicted_series = []
-
     for epoch in tqdm(range(start_epoch + 1, num_epochs + 1)):
+        train_target_series = []
+        train_predicted_series = []
         running_loss = 0
         for inputs, targets in train_loader:
             current_batch_size = inputs.size(0)
@@ -60,30 +60,31 @@ def train_model(model, criterion, train_loader, validation_loader, start_epoch, 
         running_loss /= current_batch_size
         train_losses.append(running_loss.item())
         print(f'Epoch [{epoch}/{num_epochs}] Training Loss: {running_loss:.6f}')
-
+        
+        
         # Visualize time series predictions for the entire train set and save to the predictions directory
         visualize_time_series_predictions_and_save(train_target_series, train_predicted_series, predictions_dir, epoch, phase='train')
-
+        
         # Calculate validation loss
         model.eval()
         validation_loss = 0
-        target_series = []
-        predicted_series = []
+        validation_target_series = []
+        validation_predicted_series = []
 
         with torch.no_grad():
             for val_inputs, val_targets in validation_loader:
                 val_outputs = model(val_inputs)
                 val_loss = criterion(val_outputs, val_targets)
                 validation_loss += val_loss
-                target_series.append(val_targets.cpu().numpy())
-                predicted_series.append(val_outputs.cpu().numpy())
+                validation_target_series.append(val_targets.cpu().numpy())
+                validation_predicted_series.append(val_outputs.cpu().numpy())
 
         validation_loss /= len(validation_loader)
         validation_losses.append(validation_loss.item())
         print(f'Epoch [{epoch}/{num_epochs}] Validation Loss: {validation_loss:.6f}')
         
         # Visualize time series predictions for the entire validation set and save to the predictions directory
-        visualize_time_series_predictions_and_save(target_series, predicted_series, predictions_dir, epoch, phase='validation')
+        visualize_time_series_predictions_and_save(validation_target_series, validation_predicted_series, predictions_dir, epoch, phase='validation')
         
         model.train()  # Set the model back to training mode
 
@@ -110,4 +111,4 @@ def train_model(model, criterion, train_loader, validation_loader, start_epoch, 
     plt.ylabel('Loss')
     plt.legend()
     plt.savefig('loss_plot.png')  # Save the loss plot as an image
-    plt.show()
+    plt.close()

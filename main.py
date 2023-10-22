@@ -21,7 +21,7 @@ def main():
     output_size = 1
     batch_size = 256
     learning_rate = 1e-3
-    num_epochs = 300
+    num_epochs = 500
 
     # Create the saved_models directory if it doesn't exist
     os.makedirs(saved_models_dir, exist_ok=True)
@@ -38,7 +38,7 @@ def main():
     train_model(model, criterion, train_loader, validation_loader, start_epoch, num_epochs, best_loss, best_model_path, learning_rate, saved_models_dir, predicted_dir)
 
     # Evaluate the model on the test data
-    evaluate_model(model, test_loader, criterion, best_model_path, num_batches_to_plot=2)
+    evaluate_model(model, test_loader, criterion, best_model_path, num_batches_to_plot=4)
 
 # Execute the main function when the script is run
 if __name__ == "__main__":
