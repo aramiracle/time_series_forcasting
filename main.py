@@ -21,7 +21,7 @@ def main():
     output_size = 1
     batch_size = 256
     learning_rate = 1e-3
-    num_epochs = 500
+    num_epochs = 800
 
     # Create the saved_models directory if it doesn't exist
     os.makedirs(saved_models_dir, exist_ok=True)

@@ -23,9 +23,9 @@ class HybridRNN(nn.Module):
         self.use_gru = use_gru
 
         if self.use_lstm:
-            self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
+            self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, dropout=0.3)
         if self.use_gru:
-            self.gru = nn.GRU(input_size, hidden_size, num_layers, batch_first=True)
+            self.gru = nn.GRU(input_size, hidden_size, num_layers, batch_first=True, dropout=0.3)
         
         if self.use_lstm and self.use_gru:
             self.fc = nn.Sequential(
