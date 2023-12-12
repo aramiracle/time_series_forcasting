@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class HybridRNN(nn.Module):
-    def __init__(self, input_size, hidden_size, num_layers, output_size, use_lstm=True, use_gru=True):
+    def __init__(self, input_size, hidden_size, output_size, num_layers, num_heads, use_lstm=True, use_gru=True):
         """
         Initialize a HybridRNN model.
 
@@ -17,8 +17,8 @@ class HybridRNN(nn.Module):
         super(HybridRNN, self).__init__()
         self.input_size = input_size
         self.hidden_size = hidden_size
-        self.num_layers = num_layers
         self.output_size = output_size
+        self.num_layers = num_layers
         self.use_lstm = use_lstm
         self.use_gru = use_gru
 
@@ -52,12 +52,35 @@ class HybridRNN(nn.Module):
         if self.use_lstm and self.use_gru:
             lstm_out, _ = self.lstm(x)
             gru_out, _ = self.gru(x)
-            out = torch.cat((lstm_out, gru_out), dim=1)
+            out = torch.cat((lstm_out, gru_out), dim=2)
         elif self.use_lstm:
             lstm_out, _ = self.lstm(x)
             out = lstm_out
         elif self.use_gru:
             gru_out, _ = self.gru(x)
             out = gru_out
-        out = self.fc(out)
+        out = self.fc(out)[:, -1: :].squeeze()
         return out
+    
+class Transformer(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size, num_layers, num_heads):
+        super(Transformer, self).__init__()
+        self.embedding = nn.Linear(input_size, hidden_size)
+        self.transformer = nn.Transformer(
+            d_model=hidden_size,
+            nhead=num_heads,
+            num_encoder_layers=num_layers,
+            num_decoder_layers=num_layers,
+        )
+        self.fc = nn.Sequential(
+                nn.Linear(hidden_size, 10),
+                nn.Linear(10, output_size)
+            )
+
+    def forward(self, x):
+        x = self.embedding(x)
+        x = x.permute(1, 0, 2)  # Change the shape for the transformer
+        output = self.transformer(x, x)
+        output = output.permute(1, 0, 2)  # Change the shape back
+        output = self.fc(output)[:, -1: :].squeeze()
+        return output
