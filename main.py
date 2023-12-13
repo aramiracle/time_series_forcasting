@@ -9,7 +9,8 @@ from load_model import load_model
 def main():
     # Set the data directory and file paths
     data_dir = 'data/main'
-    model_type = "Transformer"  # Change this to "TransformerTimeSeries" if needed
+    results_dir = 'results'
+    model_type = "HybridRNN"  # Change this to "Transformer" if needed
     saved_models_dir = f'saved_models/{model_type}'
     best_model_path = f'{saved_models_dir}/best_model.pth'
     predictions_dir = 'prediction'
@@ -23,7 +24,7 @@ def main():
     batch_size = 256
     num_heads = 2
     learning_rate = 1e-3
-    num_epochs = 15
+    num_epochs = 50
 
     # Create the saved_models directory if it doesn't exist
     os.makedirs(saved_models_dir, exist_ok=True)
@@ -39,7 +40,7 @@ def main():
     train_model(model, criterion, train_loader, validation_loader, start_epoch, num_epochs, best_loss, best_model_path, learning_rate, saved_models_dir, predictions_dir)
 
     # Evaluate the model on the test data
-    evaluate_model(model, test_loader, criterion, best_model_path, num_batches_to_plot=4)
+    evaluate_model(model, test_loader, criterion, best_model_path, model_type, results_dir, num_batches_to_plot=4)
 
 # Execute the main function when the script is run
 if __name__ == "__main__":

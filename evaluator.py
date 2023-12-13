@@ -1,8 +1,10 @@
+import os
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
-def evaluate_model(model, test_loader, criterion, best_model_path, num_batches_to_plot=1):
+def evaluate_model(model, test_loader, criterion, best_model_path, model_type, results_dir, num_batches_to_plot=1):
+    os.makedirs(results_dir, exist_ok=True)
     # Load the best model weights
     model.load_state_dict(torch.load(best_model_path))
     model.eval()
@@ -39,5 +41,11 @@ def evaluate_model(model, test_loader, criterion, best_model_path, num_batches_t
     plt.plot(test_outputs, color='r', label="Model Predictions")
     plt.plot(test_targets, color='b', label="Actual")
     plt.legend()
-    plt.savefig('results.png')
+
+    # Add a title to the plot
+    plt.title(f'{model_type} - Model Predictions vs Actual')
+
+    # Save the plot with model_type in the filename
+    result_filename = f'{results_dir}/{model_type}.png'
+    plt.savefig(result_filename)
     plt.close()
