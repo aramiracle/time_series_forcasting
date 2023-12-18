@@ -157,10 +157,10 @@ This project offers a powerful tool for time series forecasting, combining the s
 
 ## Conclusion
 
-This project provides a comprehensive solution for time series forecasting using a hybrid RNN model. The combination of LSTM and GRU layers allows for capturing complex patterns and dependencies in time series data. It is a versatile tool that can be applied to various forecasting tasks, including energy consumption, weather prediction, and financial forecasting.
+This project not only provides a powerful hybrid RNN model for time series forecasting but also introduces a Transformer-based model for sequence-to-sequence tasks. The inclusion of the Transformer architecture broadens the scope of applications to scenarios where capturing long-range dependencies and global patterns is crucial.
 
-By following the instructions and integrating your dataset, you can utilize this project to develop accurate time series forecasting models tailored to your specific domain and data.
+The hybrid nature of the project, incorporating both RNN and Transformer models, showcases its flexibility in addressing diverse forecasting challenges. Whether you are dealing with temporal dependencies in time series data or requiring sequence-to-sequence predictions, this project offers a versatile toolkit.
 
-Feel free to clone and change the model or structure.
+By following the outlined instructions and adapting the models to your dataset, you can harness the strengths of both RNN and Transformer architectures to build accurate and adaptable forecasting models. Feel free to clone the project and experiment with different configurations to suit your specific needs.
 
-Happy forecasting!
+Happy forecasting and exploring the capabilities of this comprehensive time series forecasting solution!
