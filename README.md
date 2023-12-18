@@ -1,6 +1,6 @@
 # HybridRNN Time Series Forecasting Project
 
-This project implements a Hybrid Recurrent Neural Network (RNN) for time series forecasting. Time series forecasting is a common problem in various domains, including finance, weather prediction, and energy consumption analysis. This project aims to provide a robust solution for forecasting time series data using a hybrid model that combines both LSTM and GRU layers for improved performance.
+This project introduces a sophisticated approach to time series forecasting by combining a Hybrid Recurrent Neural Network (RNN) with a Transformer model. Designed for domains such as finance, weather prediction, and energy consumption analysis, the hybrid model integrates LSTM and GRU layers to enhance predictive accuracy. The inclusion of the Transformer model extends the framework's capabilities for handling intricate dependencies and global patterns. Offering flexibility and robustness, this project provides users with a versatile tool for crafting accurate forecasting models tailored to specific datasets. Explore and modify the project to meet the unique demands of your forecasting challenges. 
 
 ## Project Structure
 
