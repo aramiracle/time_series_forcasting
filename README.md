@@ -142,6 +142,7 @@ The results on test dataset is shown below:
 
 ![HybridRNN Model](results/HybridRNN.png)
 ![Transformer Model](results/Transformer.png)
+![HybridTransformerRNN Model](results/HybridTransformerRNN.png)
 
 ## Usage
 
