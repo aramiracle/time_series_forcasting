@@ -10,7 +10,7 @@ def main():
     # Set the data directory and file paths
     data_dir = 'data/main'
     results_dir = 'results'
-    model_type = "Transformer"  # Change this to "Transformer" if needed
+    model_type = "HybridTransformerRNN"  # Change this to "Transformer" if needed
     saved_models_dir = f'saved_models/{model_type}'
     best_model_path = f'{saved_models_dir}/best_model.pth'
     predictions_dir = 'prediction'
@@ -19,7 +19,7 @@ def main():
     sequence_length = 24 * 7  # One week of hourly data
     input_size = 6
     hidden_size = 64
-    num_layers = 2
+    num_layers = 1
     output_size = 1
     batch_size = 256
     num_heads = 2

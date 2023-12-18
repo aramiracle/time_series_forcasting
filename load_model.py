@@ -3,7 +3,7 @@
 import os
 import torch
 
-from model import HybridRNN, Transformer
+from model import HybridRNN, Transformer, HybridTransformerRNN
 
 def load_model(saved_models_dir, input_size, hidden_size, num_layers, output_size, num_heads, model_type='HybridRNN'):
     # List all model files in the specified directory that start with "epoch_"
@@ -14,6 +14,8 @@ def load_model(saved_models_dir, input_size, hidden_size, num_layers, output_siz
         model_class = HybridRNN
     elif model_type == 'Transformer':
         model_class = Transformer
+    elif model_type == 'HybridTransformerRNN':
+        model_class = HybridTransformerRNN
     else:
         raise ValueError(f"Invalid model type: {model_type}")
 
