@@ -136,6 +136,12 @@ The dataset used in this project is the ETDataset, which is available on [GitHub
 
 3. **Data Preprocessing**: It's important to preprocess the dataset appropriately, as the code assumes that the data is stored in CSV files and may require scaling or other transformations. The `TimeSeriesDataset` class in `data_loader.py` handles data loading and preprocessing, such as Min-Max scaling, but ensure that the data format matches your specific use case.
 
+## Results
+
+The results on test dataset is shown below:
+![HybridRNN Model](results/HybridRNN.png)
+![Transformer Model](results/Transformer.png)
+
 ## Usage
 
 To run the project and make use of the provided functionalities, you should execute the `main.py` script. Ensure that you have the necessary dependencies installed, including PyTorch, pandas, NumPy, and Matplotlib.
