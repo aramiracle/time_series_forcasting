@@ -139,6 +139,7 @@ The dataset used in this project is the ETDataset, which is available on [GitHub
 ## Results
 
 The results on test dataset is shown below:
+
 ![HybridRNN Model](results/HybridRNN.png)
 ![Transformer Model](results/Transformer.png)
 
