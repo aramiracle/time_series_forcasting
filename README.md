@@ -37,12 +37,49 @@ The `data_loader.py` file is responsible for loading and processing time series 
 
 ### `model.py`
 
-The `model.py` file defines the architecture of the HybridRNN model. This model is designed for time series forecasting and offers flexibility in choosing between LSTM and GRU layers. Here's an overview of the `HybridRNN` class:
+The `model.py` file defines the architecture of the HybridRNN model and includes a Transformer model. The HybridRNN is designed for time series forecasting, providing flexibility with a choice between LSTM and GRU layers. Below is an extended overview of both the `HybridRNN` and `Transformer` classes:
 
-- The `HybridRNN` class is a subclass of `nn.Module` and encapsulates the architecture of the hybrid model.
-- The model can use either LSTM or GRU layers, determined by the `use_lstm` and `use_gru` parameters.
-- It includes a fully connected layer for producing the model's output.
-- The forward pass of the model combines the output of LSTM and GRU layers, if both are used, and passes it through the fully connected layer.
+#### HybridRNN Class
+
+The `HybridRNN` class is initialized with the following parameters:
+
+- `input_size`: The size of the input feature vectors.
+- `hidden_size`: The number of hidden units in the RNN layers.
+- `output_size`: The size of the output.
+- `num_layers`: The number of RNN layers.
+- `num_heads`: Number of attention heads in the multi-head attention models.
+- `use_lstm` (default True): Whether to use LSTM layers.
+- `use_gru` (default True): Whether to use GRU layers.
+
+The class contains LSTM and GRU layers, and the output from these layers is concatenated if both are used. The fully connected layers are then applied to the concatenated output for the final prediction.
+
+The forward method of the model takes an input tensor `x` with shape `(batch_size, sequence_length, input_size)` and performs the following steps:
+
+- If both LSTM and GRU are used, it computes the output of both layers and concatenates them along the feature dimension.
+- If only LSTM or GRU is used, it computes the output of the respective layer.
+- The fully connected layers are applied to the output, and the last time step's prediction is extracted using slicing (`[:, -1:, :]`).
+- The final output is obtained by squeezing the tensor.
+
+#### Transformer Class
+
+The `Transformer` class is designed for sequence-to-sequence tasks and includes the following components:
+
+- `embedding`: Linear layer for input feature embedding.
+- `transformer`: `nn.Transformer` module with parameters:
+  - `d_model`: Hidden size of the model.
+  - `nhead`: Number of attention heads.
+  - `num_encoder_layers`: Number of transformer encoder layers.
+  - `num_decoder_layers`: Number of transformer decoder layers.
+
+The forward method of the model takes an input tensor `x` with shape `(batch_size, sequence_length, input_size)` and performs the following steps:
+
+- Embeds the input features using the linear embedding layer.
+- Permutes the tensor for compatibility with the transformer.
+- Passes the tensor through the transformer layers.
+- Reshapes the output back to the original shape.
+- Applies fully connected layers to obtain the final prediction for each time step.
+
+Note: Ensure thorough testing and consideration of your specific use case before deploying this code in a production environment.
 
 ### `trainer.py`
 
