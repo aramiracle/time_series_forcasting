@@ -98,6 +98,7 @@ class HybridTransformerRNN(nn.Module):
             num_decoder_layers=num_layers,
             dropout=0.3
         )
+        
         self.fc = nn.Sequential(
                 nn.Linear(hidden_size * 3, 10),
                 nn.Linear(10, output_size)
